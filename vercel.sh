@@ -1,8 +1,10 @@
-# github submodule repo address without https:// prefix
-declare -A remotes=(
-    ["apps-website"]="github.com/calcom/website"
-    ["apps-api"]="github.com/calcom/api"
-)
+# github submodule repo addresses without https:// prefix
+
+# This didn't work ¯\_(ツ)_/¯
+# declare -A remotes=(
+#     ["apps/website"]="github.com/calcom/website"
+#     ["apps/api"]="github.com/calcom/api"
+# )
 
 # github access token is necessary
 # add it to Environment Variables on Vercel
@@ -32,7 +34,16 @@ git init # initialise empty repo
 
 for submodule in $submodules; do
     IFS="=" read COMMIT SUBMODULE_PATH <<<"$submodule"
-    SUBMODULE_GITHUB=$remotes[$(echo $SUBMODULE_PATH | sed "s/\//-/g")]
+
+    # This should be a hash table but couldn't make it work ¯\_(ツ)_/¯
+    # SUBMODULE_GITHUB=$remotes[$SUBMODULE_PATH]
+    if [ "$SUBMODULE_PATH" == "apps/website" ]; then
+        SUBMODULE_GITHUB=github.com/calcom/website
+    fi
+
+    if [ "$SUBMODULE_PATH" == "apps/api" ]; then
+        SUBMODULE_GITHUB=github.com/calcom/api
+    fi
 
     git remote add $SUBMODULE_PATH https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
     git fetch --depth=1 $SUBMODULE_PATH $COMMIT                                   # fetch only the required version
