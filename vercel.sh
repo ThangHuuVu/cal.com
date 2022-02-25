@@ -22,11 +22,6 @@ output=$(git submodule status --recursive) # get submodule info
 # Extract each submodule commit hash and path
 submodules=$(echo $output | sed "s/ -/__/g" | sed "s/ /=/g" | sed "s/-//g" | tr "__" "\n")
 
-# set up an empty temporary work directory
-rm -rf tmp || true # remove the tmp folder if exists
-mkdir tmp          # create the tmp folder
-cd tmp             # go into the tmp folder
-
 # checkout the current submodule commit
 git config --global init.defaultBranch main
 git config --global advice.detachedHead false
@@ -34,6 +29,11 @@ git init # initialise empty repo
 
 for submodule in $submodules; do
     IFS="=" read COMMIT SUBMODULE_PATH <<<"$submodule"
+
+    # set up an empty temporary work directory
+    rm -rf tmp || true # remove the tmp folder if exists
+    mkdir tmp          # create the tmp folder
+    cd tmp             # go into the tmp folder
 
     # This should be a hash table but couldn't make it work ¯\_(ツ)_/¯
     # SUBMODULE_GITHUB=$remotes[$SUBMODULE_PATH]
