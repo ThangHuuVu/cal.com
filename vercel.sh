@@ -1,7 +1,7 @@
 # github submodule repo address without https:// prefix
 declare -A remotes=(
-    ["apps/website"]=github.com/calcom/website
-    ["apps/api"]=github.com/calcom/api
+    ["apps-website"]="github.com/calcom/website"
+    ["apps-api"]="github.com/calcom/api"
 )
 
 # github access token is necessary
@@ -32,7 +32,7 @@ git init # initialise empty repo
 
 for submodule in $submodules; do
     IFS="=" read COMMIT SUBMODULE_PATH <<<"$submodule"
-    SUBMODULE_GITHUB=$remotes["$SUBMODULE_PATH"]
+    SUBMODULE_GITHUB=$remotes[$(echo $SUBMODULE_PATH | sed "s/\//-/g")]
 
     git remote add $SUBMODULE_PATH https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
     git fetch --depth=1 $SUBMODULE_PATH $COMMIT                                   # fetch only the required version
