@@ -32,7 +32,7 @@ git init # initialise empty repo
 
 for submodule in $submodules; do
     IFS="=" read COMMIT SUBMODULE_PATH <<<"$submodule"
-    SUBMODULE_GITHUB=$remotes[$SUBMODULE_PATH]
+    SUBMODULE_GITHUB=$remotes["$SUBMODULE_PATH"]
 
     git remote add $SUBMODULE_PATH https://$GITHUB_ACCESS_TOKEN@$SUBMODULE_GITHUB # add origin of the submodule
     git fetch --depth=1 $SUBMODULE_PATH $COMMIT                                   # fetch only the required version
