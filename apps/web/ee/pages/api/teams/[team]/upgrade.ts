@@ -6,7 +6,7 @@ import { getSession } from "@lib/auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
-    const session = await getSession({ req });
+    const session = await getSession({ req, res });
 
     if (!session) {
       res.status(401).json({ message: "You must be logged in to do this" });

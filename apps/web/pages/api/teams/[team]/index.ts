@@ -5,7 +5,7 @@ import prisma from "@lib/prisma";
 import { getTeamWithMembers } from "@lib/queries/teams";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req: req });
+  const session = await getSession({ req, res });
   if (!session) {
     return res.status(401).json({ message: "Not authenticated" });
   }

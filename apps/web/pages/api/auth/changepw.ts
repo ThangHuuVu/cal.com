@@ -7,7 +7,7 @@ import prisma from "@lib/prisma";
 import { ErrorCode, hashPassword, verifyPassword } from "../../../lib/auth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req: req });
+  const session = await getSession({ req, res });
 
   if (!session || !session.user || !session.user.email) {
     res.status(401).json({ message: "Not authenticated" });

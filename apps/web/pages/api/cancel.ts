@@ -26,7 +26,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const uid = asStringOrNull(req.body.uid) || "";
   const cancellationReason = asStringOrNull(req.body.reason) || "";
-  const session = await getSession({ req: req });
+  const session = await getSession({ req, res });
 
   const bookingToDelete = await prisma.booking.findUnique({
     where: {

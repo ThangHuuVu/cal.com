@@ -7,7 +7,7 @@ import { HttpError as HttpCode } from "@lib/core/http/error";
 import prisma from "@lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   if (!session?.user?.id) {
     return res.status(401).json({ message: "Not authenticated" });
   }

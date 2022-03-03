@@ -11,7 +11,7 @@ const scopes = ["User.Read", "Calendars.Read", "Calendars.ReadWrite", "offline_a
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // Check that user is authenticated
-    const session = await getSession({ req });
+    const session = await getSession({ req, res });
 
     if (!session?.user) {
       res.status(401).json({ message: "You must be logged in to do this" });

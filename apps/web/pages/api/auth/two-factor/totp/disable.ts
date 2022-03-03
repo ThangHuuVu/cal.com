@@ -8,7 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   if (!session) {
     return res.status(401).json({ message: "Not authenticated" });
   }

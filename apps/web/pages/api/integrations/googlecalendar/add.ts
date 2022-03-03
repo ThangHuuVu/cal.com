@@ -15,7 +15,7 @@ const scopes = [
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "GET") {
     // Check that user is authenticated
-    const session = await getSession({ req: req });
+    const session = await getSession({ req, res });
 
     if (!session) {
       res.status(401).json({ message: "You must be logged in to do this" });

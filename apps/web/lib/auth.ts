@@ -1,7 +1,8 @@
 import { IdentityProvider } from "@prisma/client";
 import { compare, hash } from "bcryptjs";
-import { Session } from "next-auth";
-import { getSession as getSessionInner, GetSessionParams } from "next-auth/react";
+import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from "next";
+import { getServerSession, Session } from "next-auth";
+import { authOptions } from "pages/api/auth/[...nextauth]";
 
 export async function hashPassword(password: string) {
   const hashedPassword = await hash(password, 12);
@@ -13,11 +14,15 @@ export async function verifyPassword(password: string, hashedPassword: string) {
   return isValid;
 }
 
-export async function getSession(options: GetSessionParams): Promise<Session | null> {
-  const session = await getSessionInner(options);
-
-  // that these are equal are ensured in `[...nextauth]`'s callback
-  return session as Session | null;
+export async function getSession(
+  params:
+    | GetServerSidePropsContext
+    | {
+        req: NextApiRequest;
+        res: NextApiResponse;
+      }
+): Promise<Session | null> {
+  return getServerSession(params, authOptions);
 }
 
 export enum ErrorCode {

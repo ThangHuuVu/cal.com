@@ -5,7 +5,7 @@ import prisma from "@lib/prisma";
 
 // @deprecated - USE TRPC
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   if (!session?.user?.id) {
     return res.status(401).json({ message: "Not authenticated" });
   }

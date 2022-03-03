@@ -8,7 +8,7 @@ import { defaultAvatarSrc } from "@lib/profile";
  * @deprecated Use TRCP's viewer.me query
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   if (!session) {
     res.status(401).json({ message: "Not authenticated" });
     return;

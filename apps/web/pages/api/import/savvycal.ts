@@ -6,7 +6,7 @@ import { getSession } from "@lib/auth";
 const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   const authenticatedUser = await prisma.user.findFirst({
     rejectOnNotFound: true,
     where: {

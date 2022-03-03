@@ -6,7 +6,7 @@ import { createContext } from "@server/createContext";
 import { viewerRouter } from "@server/routers/viewer";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   /** So we can reuse tRCP queries */
   const trpcCtx = await createContext({ req, res });
 

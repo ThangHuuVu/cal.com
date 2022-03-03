@@ -1,5 +1,5 @@
 import { IdentityProvider } from "@prisma/client";
-import NextAuth, { Session } from "next-auth";
+import NextAuth, { NextAuthOptions, Session } from "next-auth";
 import { Provider } from "next-auth/providers";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
@@ -140,7 +140,7 @@ if (isSAMLLoginEnabled) {
   });
 }
 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -349,4 +349,6 @@ export default NextAuth({
       return false;
     },
   },
-});
+};
+
+export default NextAuth(authOptions);

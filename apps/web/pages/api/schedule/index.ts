@@ -5,7 +5,7 @@ import { getAvailabilityFromSchedule } from "@lib/availability";
 import prisma from "@lib/prisma";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req });
+  const session = await getSession({ req, res });
   const userId = session?.user?.id;
   if (!userId) {
     res.status(401).json({ message: "Not authenticated" });

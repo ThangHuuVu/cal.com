@@ -8,7 +8,7 @@ import prisma from "@lib/prisma";
 import { resizeBase64Image } from "@server/lib/resizeBase64Image";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const session = await getSession({ req: req });
+  const session = await getSession({ req, res });
 
   if (!session) {
     res.status(401).json({ message: "Not authenticated" });

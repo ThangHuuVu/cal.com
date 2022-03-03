@@ -49,9 +49,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     throw new Error(`File is not named sso/[provider]`);
   }
 
-  const { req } = context;
-
-  const session = await getSession({ req });
+  const session = await getSession(context);
   const ssr = await ssrInit(context);
 
   if (session) {

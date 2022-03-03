@@ -94,12 +94,12 @@ async function getUserFromSession({
  * Creates context for an incoming request
  * @link https://trpc.io/docs/context
  */
-export const createContext = async ({ req }: CreateContextOptions) => {
+export const createContext = async (context: CreateContextOptions) => {
   // for API-response caching see https://trpc.io/docs/caching
-  const session = await getSession({ req });
+  const session = await getSession(context);
 
-  const user = await getUserFromSession({ session, req });
-  const locale = user?.locale ?? getLocaleFromHeaders(req);
+  const user = await getUserFromSession({ session, req: context.req });
+  const locale = user?.locale ?? getLocaleFromHeaders(context.req);
   const i18n = await serverSideTranslations(locale, ["common"]);
   return {
     i18n,

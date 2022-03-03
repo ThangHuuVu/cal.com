@@ -186,8 +186,7 @@ export default function Login({
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
-  const { req } = context;
-  const session = await getSession({ req });
+  const session = await getSession(context);
   const ssr = await ssrInit(context);
 
   if (session) {

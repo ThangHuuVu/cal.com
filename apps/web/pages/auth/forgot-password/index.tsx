@@ -127,12 +127,11 @@ export default function ForgotPassword({ csrfToken }: { csrfToken: string }) {
 }
 
 ForgotPassword.getInitialProps = async (context: GetServerSidePropsContext) => {
-  const { req, res } = context;
-  const session = await getSession({ req });
+  const session = await getSession(context);
 
   if (session) {
-    res.writeHead(302, { Location: "/" });
-    res.end();
+    context.res.writeHead(302, { Location: "/" });
+    context.res.end();
     return;
   }
 

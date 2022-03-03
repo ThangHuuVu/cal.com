@@ -1,5 +1,6 @@
 import parser from "accept-language-parser";
 import { IncomingMessage } from "http";
+import { GetServerSidePropsContext } from "next";
 
 import { getSession } from "@lib/auth";
 import prisma from "@lib/prisma";
@@ -16,9 +17,9 @@ export function getLocaleFromHeaders(req: IncomingMessage): string {
   return preferredLocale ?? i18n.defaultLocale;
 }
 
-export const getOrSetUserLocaleFromHeaders = async (req: IncomingMessage): Promise<string> => {
-  const session = await getSession({ req });
-  const preferredLocale = getLocaleFromHeaders(req);
+export const getOrSetUserLocaleFromHeaders = async (context: GetServerSidePropsContext): Promise<string> => {
+  const session = await getSession(context);
+  const preferredLocale = getLocaleFromHeaders(context.req);
 
   if (session?.user?.id) {
     const user = await prisma.user.findUnique({

@@ -10,7 +10,7 @@ import prisma from "@lib/prisma";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { code, error, error_description } = req.query;
   // Check that user is authenticated
-  const session = await getSession({ req: req });
+  const session = await getSession({ req, res });
 
   if (!session?.user) {
     res.status(401).json({ message: "You must be logged in to do this" });
